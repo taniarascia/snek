@@ -1,5 +1,18 @@
 {
+  "name": "@taniarascia/snek",
+  "version": "0.1.0",
+  "description": "no step on snek",
+  "author": {
+    "name": "Tania Rascia",
+    "email": "me@taniarascia.com",
+    "url": "https://www.taniarascia.com"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
     "blessed": "^0.1.81"
-  }
+  },
+  "private": false
 }
