@@ -9,7 +9,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "play": "node play.js"
+    "play": "node src/play.js"
   },
   "dependencies": {
     "blessed": "^0.1.81"
