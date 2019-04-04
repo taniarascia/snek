@@ -1,6 +1,6 @@
-# no step on snek [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![snekjs on NPM](https://img.shields.io/npm/v/snekjs.svg?color=green&label=snekjs)](https://https://www.npmjs.com/package/snekjs)
+# 🐍 no step on snek [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![snekjs on NPM](https://img.shields.io/npm/v/snekjs.svg?color=green&label=snekjs)](https://https://www.npmjs.com/package/snekjs)
 
-Snake written in JavaScript for the terminal (Node.js)
+Snake written in JavaScript for the terminal (Node.js).
 
 ## Instructions
 
@@ -67,3 +67,11 @@ Run the game.
 ```bash
 node play.js
 ```
+
+## Author
+
+- [Tania Rascia](https://www.taniarascia.com)
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
