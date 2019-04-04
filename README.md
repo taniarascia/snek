@@ -7,7 +7,7 @@ Snake written in JavaScript for the terminal (Node.js).
 ### Clone from repository
 
 ```bash
-git clone git@github.com:taniarascia/snek
+git clone https://github.com/taniarascia/snek
 cd snek
 yarn && yarn play
 ```
