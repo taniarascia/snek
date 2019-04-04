@@ -1,5 +1,5 @@
 {
-  "name": "@taniarascia/snek",
+  "name": "snekjs",
   "version": "0.1.0",
   "description": "no step on snek",
   "author": {
@@ -9,7 +9,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "play": "node play.js"
   },
   "dependencies": {
     "blessed": "^0.1.81"
