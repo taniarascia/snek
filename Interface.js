@@ -1,7 +1,9 @@
 /**
  * @class Interface
  *
- * Interact with the input (keyboard directions) and output (creating screen and drawing pixels to the screen)
+ * Interact with the input (keyboard directions) and output (creating screen and drawing pixels
+ * to the screen). Currently this class is one hard-coded interface, but could be made into an
+ * abstract and extended for multiple interfaces - web, terminal, etc.
  */
 class Interface {
   constructor(screen, blessed) {

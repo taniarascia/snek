@@ -1,7 +1,7 @@
 /**
  * @class Game
  *
- *  Track the state of the snake, dot, and score
+ * Track the state of the snake, dot, and score
  */
 class Game {
   constructor(ui) {
@@ -22,10 +22,10 @@ class Game {
   }
 
   moveSnake() {
-    let goingUp = this.vy === -1
-    let goingDown = this.vy === 1
-    let goingLeft = this.vx === -1
-    let goingRight = this.vx === 1
+    const goingUp = this.vy === -1
+    const goingDown = this.vy === 1
+    const goingLeft = this.vx === -1
+    const goingRight = this.vx === 1
 
     if (this.ui.changingDirection) {
       return
