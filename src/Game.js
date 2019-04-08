@@ -1,3 +1,4 @@
+const { performance, PerformanceObserver } = require('perf_hooks')
 /**
  * @class Game
  *
@@ -16,7 +17,18 @@ class Game {
     // User interface class for all i/o operations
     this.ui = ui
 
-    // The snake is an array of x/y coordinates
+    this.reset()
+
+    // Bind handlers to UI so we can detect input change from the Game class
+    this.ui.bindHandlers(
+      this.changeDirection.bind(this),
+      this.quit.bind(this),
+      this.start.bind(this)
+    )
+  }
+
+  reset() {
+    // Set up initial state
     this.snake = [
       { x: 5, y: 0 },
       { x: 4, y: 0 },
@@ -25,24 +37,20 @@ class Game {
       { x: 1, y: 0 },
       { x: 0, y: 0 },
     ]
-
-    // The first random dot will be generated before the game begins
     this.dot = {}
     this.score = 0
-
-    // Start the game in the top left, moving right
+    this.vx = 0
+    this.vy = 0
     this.currentDirection = 'right'
     this.changingDirection = false
     this.vx = 0 // horizontal velocity
     this.vy = 0 // vertical velocity
     this.timer = null
 
-    // Bind handlers to UI so we can detect input change from the Game class
-    this.ui.bindHandlers(
-      this.changeDirection.bind(this),
-      this.quit.bind(this),
-      this.start.bind(this)
-    )
+    // Generate the first dot before the game begins
+    this.generateDot()
+    this.ui.updateScore(this.score)
+    this.ui.render()
   }
 
   /**
@@ -155,14 +163,14 @@ class Game {
 
     return (
       collide ||
-      // right wall
-      this.snake[0].x === this.ui.gameContainer.width - 1 ||
-      // left wall
-      this.snake[0].x === -1 ||
-      // top wall
-      this.snake[0].y === this.ui.gameContainer.height - 1 ||
-      // bottom wall
-      this.snake[0].y === -1
+      // Right wall
+      this.snake[0].x >= this.ui.gameContainer.width - 1 ||
+      // Left wall
+      this.snake[0].x <= -1 ||
+      // Top wall
+      this.snake[0].y >= this.ui.gameContainer.height - 1 ||
+      // Bottom wall
+      this.snake[0].y <= -1
     )
   }
 
@@ -173,9 +181,9 @@ class Game {
 
   tick() {
     if (this.gameOver()) {
+      this.showGameOverScreen()
       clearInterval(this.timer)
       this.timer = null
-      this.showGameOverScreen()
 
       return
     }
@@ -188,12 +196,10 @@ class Game {
     this.ui.render()
   }
 
-  reset() {}
-
   start() {
     if (!this.timer) {
-      // Generate the first dot before the game begins
-      this.generateDot()
+      this.reset()
+
       this.timer = setInterval(this.tick.bind(this), 50)
     }
   }

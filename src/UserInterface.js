@@ -43,8 +43,31 @@ class UserInterface {
       },
       content: '{bold}Score{/bold}: 0',
     }
+
+    this.gameOverBox = {
+      parent: this.screen,
+      top: 'center',
+      left: 'center',
+      width: 20,
+      height: 5,
+      tags: true,
+      valign: 'middle',
+      content: `{center}Game Over!{/center}`,
+      border: {
+        type: 'line',
+      },
+      style: {
+        fg: 'black',
+        bg: 'magenta',
+        border: {
+          fg: '#ffffff',
+        },
+      },
+    }
+
     this.gameContainer = this.blessed.box(this.initialGameBox)
     this.scoreContainer = this.blessed.box(this.scoreBox)
+    this.gameOverContainer = null
   }
 
   bindHandlers(keyPressHandler, quitHandler, enterHandler) {
@@ -71,35 +94,19 @@ class UserInterface {
 
   // Keep track of how many dots have been consumed and write to the score box
   updateScore(score) {
+    this.scoreContainer.style.bg = 'blue'
     this.scoreContainer.setLine(0, `{bold}Score:{/bold} ${score}`)
   }
 
   // BSOD on game over
   gameOverScreen() {
-    this.gameContainer = this.blessed.box({
-      parent: this.screen,
-      top: 'center',
-      left: 'center',
-      width: 20,
-      height: 5,
-      tags: true,
-      valign: 'middle',
-      content: `{center}Game Over!{/center}`,
-      border: {
-        type: 'line',
-      },
-      style: {
-        fg: 'black',
-        bg: 'magenta',
-        border: {
-          fg: '#ffffff',
-        },
-      },
-    })
+    this.gameContainer = this.blessed.box(this.gameOverBox)
   }
 
   // Set to initial screen
   clearScreen() {
+    this.gameContainer.detach()
+    if (this.gameOverContainer) this.gameOverContainer.detach()
     this.gameContainer = this.blessed.box(this.initialGameBox)
   }
 
