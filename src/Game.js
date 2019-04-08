@@ -5,6 +5,9 @@
  */
 class Game {
   constructor(ui) {
+    // User interface class for all i/o operations
+    this.ui = ui
+
     // The snake is an array of x/y coordinates
     this.snake = [
       { x: 5, y: 0 },
@@ -14,10 +17,8 @@ class Game {
       { x: 1, y: 0 },
       { x: 0, y: 0 },
     ]
-    this.score = 0
-    this.ui = ui // i/o
-
     this.dot = {} // the first random dot will be generated before the game begins
+    this.score = 0
 
     // Start the game in the top left, moving right
     this.initialDirection = 'right'
@@ -25,9 +26,14 @@ class Game {
     this.changingDirection = false
     this.vx = 0 // horizontal velocity
     this.vy = 0 // vertical velocity
+    this.timer = null
 
     // Bind handlers to UI
-    this.ui.bindHandlers(this.changeDirection.bind(this), this.quit.bind(this))
+    this.ui.bindHandlers(
+      this.changeDirection.bind(this),
+      this.quit.bind(this),
+      this.start.bind(this)
+    )
   }
 
   changeDirection(_, key) {
@@ -84,7 +90,7 @@ class Game {
     // If the snake lands on a dot, increase the score and generate a new dot
     if (this.snake[0].x === this.dot.x && this.snake[0].y === this.dot.y) {
       this.score++
-      this.ui.drawScore(this.score)
+      this.ui.updateScore(this.score)
       this.generateDot()
     } else {
       // Otherwise, slither
@@ -92,10 +98,10 @@ class Game {
     }
   }
 
-  renderSnake() {
+  drawSnake() {
     // Render each snake segment as a pixel
-    this.snake.forEach((segment, i) => {
-      this.ui.drawSnakeSegment(segment, i)
+    this.snake.forEach(segment => {
+      this.ui.draw(segment, 'green')
     })
   }
 
@@ -117,23 +123,24 @@ class Game {
     })
   }
 
-  renderDot() {
+  drawDot() {
     // Render the dot as a pixel
-    this.ui.drawDot(this.dot)
+    this.ui.draw(this.dot, 'red')
   }
 
-  // Set to initial direction
-  clearDirection() {
+  // Set to initial direction and clear the screen
+  clear() {
     this.changingDirection = false
+    this.ui.clearScreen()
   }
 
   gameOver() {
     // If the snake collides with itself, end the game
     const collide = this.snake
-      .filter((segment, i) => i > 0)
-      .some((segment, i) => {
-        segment.x === this.snake[0].x && segment.y === this.snake[0].y
-      })
+      // Filter out the head
+      .filter((_, i) => i > 0)
+      // If head collides with any segment, collision
+      .some(segment => segment.x === this.snake[0].x && segment.y === this.snake[0].y)
 
     return (
       collide ||
@@ -146,6 +153,31 @@ class Game {
       // bottom wall
       this.snake[0].y === -1
     )
+  }
+
+  showGameOverScreen() {
+    this.ui.gameOverScreen()
+    this.ui.render()
+  }
+
+  start() {
+    this.timer = setInterval(this.tick.bind(this), 55)
+  }
+
+  tick() {
+    if (this.gameOver()) {
+      this.showGameOverScreen()
+
+      this.timer = null
+      clearInterval(this.timer)
+    } else {
+      this.clear()
+      this.drawDot()
+      this.moveSnake()
+      this.drawSnake()
+
+      this.ui.render()
+    }
   }
 
   quit() {

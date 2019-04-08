@@ -1,5 +1,3 @@
-const { gameOverText } = require('./GameOverText')
-
 /**
  * @class UserInterface
  *
@@ -14,7 +12,7 @@ class UserInterface {
     this.screen = screen
 
     // Game title
-    this.screen.title = 'Snake.js'
+    this.screen.title = 'Snek.js'
 
     // Create the game container
     this.initialGameBox = {
@@ -45,50 +43,32 @@ class UserInterface {
     }
     this.gameContainer = this.blessed.box(this.initialGameBox)
     this.scoreContainer = this.blessed.box(this.scoreBox)
-
-    // Snake and dot are represented by pixels
-    this.snakePixels = []
-    this.dotPixel = {}
   }
 
-  bindHandlers(keyPressHandler, quitHandler) {
+  bindHandlers(keyPressHandler, quitHandler, enterHandler) {
     // Event to handle keypress i/o
     this.screen.on('keypress', keyPressHandler)
     this.screen.key(['escape', 'q', 'C-c'], quitHandler)
+    this.screen.key(['enter'], enterHandler)
   }
 
-  // Draw each snake segment as a pixel
-  drawSnakeSegment(segment, i) {
-    this.snakePixels[i] = this.blessed.box({
+  // Draw a pixel
+  draw(coords, color) {
+    this.blessed.box({
       parent: this.gameContainer,
-      top: segment.y,
-      left: segment.x,
+      top: coords.y,
+      left: coords.x,
       width: 1,
       height: 1,
       style: {
-        fg: 'green',
-        bg: 'green',
-      },
-    })
-  }
-
-  // Draw each dot as a single pixel
-  drawDot(dot) {
-    this.dotPixel = this.blessed.box({
-      parent: this.gameContainer,
-      top: dot.y,
-      left: dot.x,
-      width: 1,
-      height: 1,
-      style: {
-        fg: 'red',
-        bg: 'red',
+        fg: color,
+        bg: color,
       },
     })
   }
 
   // Keep track of how many dots have been consumed and write to the score box
-  drawScore(score) {
+  updateScore(score) {
     this.scoreContainer.setLine(0, `{bold}Score:{/bold} ${score}`)
   }
 
@@ -98,12 +78,21 @@ class UserInterface {
       parent: this.screen,
       top: 'center',
       left: 'center',
-      width: '50%',
-      height: '50%',
+      width: 20,
+      height: 5,
       tags: true,
       valign: 'middle',
-      content: `{center}${gameOverText}{/center}`,
-      style: { bg: 'black', fg: 'red' },
+      content: `{center}Game Over!{/center}`,
+      border: {
+        type: 'line',
+      },
+      style: {
+        fg: 'black',
+        bg: 'magenta',
+        border: {
+          fg: '#ffffff',
+        },
+      },
     })
   }
 
