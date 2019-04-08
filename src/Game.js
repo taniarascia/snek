@@ -29,9 +29,7 @@ class Game {
     this.score = 0
 
     // Start the game in the top left, moving right
-    this.initialDirection = 'right'
-    this.currentDirection = this.initialDirection
-    this.changingDirection = false
+    this.currentDirection = 'right'
     this.vx = 0 // horizontal velocity
     this.vy = 0 // vertical velocity
     this.timer = null
@@ -47,14 +45,11 @@ class Game {
   changeDirection(_, key) {
     if (key.name === 'up' || key.name === 'w') {
       this.currentDirection = 'up'
-    }
-    if (key.name === 'down' || key.name === 's') {
+    } else if (key.name === 'down' || key.name === 's') {
       this.currentDirection = 'down'
-    }
-    if (key.name === 'left' || key.name === 'a') {
+    } else if (key.name === 'left' || key.name === 'a') {
       this.currentDirection = 'left'
-    }
-    if (key.name === 'right' || key.name === 'd') {
+    } else if (key.name === 'right' || key.name === 'd') {
       this.currentDirection = 'right'
     }
   }
@@ -64,12 +59,6 @@ class Game {
     const goingDown = this.vy === 1
     const goingLeft = this.vx === -1
     const goingRight = this.vx === 1
-
-    if (this.changingDirection) {
-      return
-    }
-
-    this.changingDirection = true
 
     if (this.currentDirection === 'up' && !goingDown) {
       this.vy = -1
@@ -138,7 +127,6 @@ class Game {
 
   // Set to initial direction and clear the screen
   clear() {
-    this.changingDirection = false
     this.ui.clearScreen()
   }
 
