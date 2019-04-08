@@ -67,7 +67,6 @@ class UserInterface {
 
     this.gameContainer = this.blessed.box(this.initialGameBox)
     this.scoreContainer = this.blessed.box(this.scoreBox)
-    this.gameOverContainer = null
   }
 
   bindHandlers(keyPressHandler, quitHandler, enterHandler) {
@@ -106,7 +105,6 @@ class UserInterface {
   // Set to initial screen
   clearScreen() {
     this.gameContainer.detach()
-    if (this.gameOverContainer) this.gameOverContainer.detach()
     this.gameContainer = this.blessed.box(this.initialGameBox)
   }
 
