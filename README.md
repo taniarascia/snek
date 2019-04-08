@@ -40,6 +40,10 @@ Run the game.
 node index.js
 ```
 
+## Preview
+
+[![asciicast](https://asciinema.org/a/239667.svg)](https://asciinema.org/a/239667)
+
 ## Acknowledgements
 
 - [Vanya Sergeev](https://sergeev.io) for pointing out my snake collision bug, for advising me to make a single, reusable draw method, for showing me how to properly bind methods between classes, and for overall guidance and inspiration
