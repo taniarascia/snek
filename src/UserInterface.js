@@ -17,7 +17,7 @@ class UserInterface {
     this.screen.title = 'Snek.js'
 
     // Create the game container
-    this.initialGameBox = {
+    this.gameBox = {
       parent: this.screen,
       top: 1,
       left: 0,
@@ -41,7 +41,6 @@ class UserInterface {
         fg: 'black',
         bg: 'blue',
       },
-      content: '{bold}Score{/bold}: 0',
     }
 
     this.gameOverBox = {
@@ -49,10 +48,10 @@ class UserInterface {
       top: 'center',
       left: 'center',
       width: 20,
-      height: 5,
+      height: 6,
       tags: true,
       valign: 'middle',
-      content: `{center}Game Over!{/center}`,
+      content: `{center}Game Over!\n\nPress enter to try again{/center}`,
       border: {
         type: 'line',
       },
@@ -65,7 +64,7 @@ class UserInterface {
       },
     }
 
-    this.gameContainer = this.blessed.box(this.initialGameBox)
+    this.gameContainer = this.blessed.box(this.gameBox)
     this.scoreContainer = this.blessed.box(this.scoreBox)
   }
 
@@ -93,7 +92,6 @@ class UserInterface {
 
   // Keep track of how many dots have been consumed and write to the score box
   updateScore(score) {
-    this.scoreContainer.style.bg = 'blue'
     this.scoreContainer.setLine(0, `{bold}Score:{/bold} ${score}`)
   }
 
@@ -105,7 +103,14 @@ class UserInterface {
   // Set to initial screen
   clearScreen() {
     this.gameContainer.detach()
-    this.gameContainer = this.blessed.box(this.initialGameBox)
+    this.gameContainer = this.blessed.box(this.gameBox)
+  }
+
+  // Creating a new score box to prevent old snake segments from appearing on it
+  resetScore() {
+    this.scoreContainer.detach()
+    this.scoreContainer = this.blessed.box(this.scoreBox)
+    this.updateScore(0)
   }
 
   render() {

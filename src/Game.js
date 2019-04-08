@@ -39,31 +39,37 @@ class Game {
     ]
     this.dot = {}
     this.score = 0
-    this.vx = 0
-    this.vy = 0
     this.currentDirection = 'right'
+    this.directions = {
+      up: { x: 0, y: -1 },
+      down: { x: 0, y: 1 },
+      right: { x: 1, y: 0 },
+      left: { x: -1, y: 0 },
+    }
     this.changingDirection = false
-    this.vx = 0 // horizontal velocity
-    this.vy = 0 // vertical velocity
     this.timer = null
 
     // Generate the first dot before the game begins
     this.generateDot()
-    this.ui.updateScore(this.score)
+    this.ui.resetScore()
     this.ui.render()
   }
 
   /**
-   * Support WASD and arrow key controls. Update the direction of the snake.
+   * Support WASD and arrow key controls. Update the direction of the snake, and
+   * do not allow reversal.
    */
   changeDirection(_, key) {
-    if (key.name === 'up' || key.name === 'w') {
+    if ((key.name === 'up' || key.name === 'w') && this.currentDirection !== 'down') {
       this.currentDirection = 'up'
-    } else if (key.name === 'down' || key.name === 's') {
+    }
+    if ((key.name === 'down' || key.name === 's') && this.currentDirection !== 'up') {
       this.currentDirection = 'down'
-    } else if (key.name === 'left' || key.name === 'a') {
+    }
+    if ((key.name === 'left' || key.name === 'a') && this.currentDirection !== 'right') {
       this.currentDirection = 'left'
-    } else if (key.name === 'right' || key.name === 'd') {
+    }
+    if ((key.name === 'right' || key.name === 'd') && this.currentDirection !== 'left') {
       this.currentDirection = 'right'
     }
   }
@@ -77,33 +83,17 @@ class Game {
    *
    */
   moveSnake() {
-    const goingUp = this.vy === -1
-    const goingDown = this.vy === 1
-    const goingLeft = this.vx === -1
-    const goingRight = this.vx === 1
-
     if (this.changingDirection) {
       return
     }
-
     this.changingDirection = true
 
-    if (this.currentDirection === 'up' && !goingDown) {
-      this.vy = -1
-      this.vx = 0
-    } else if (this.currentDirection === 'down' && !goingUp) {
-      this.vy = 1
-      this.vx = 0
-    } else if (this.currentDirection === 'right' && !goingLeft) {
-      this.vx = 1
-      this.vy = 0
-    } else if (this.currentDirection === 'left' && !goingRight) {
-      this.vx = -1
-      this.vy = 0
+    // Move the head forward by one pixel based on velocity
+    const head = {
+      x: this.snake[0].x + this.directions[this.currentDirection].x,
+      y: this.snake[0].y + this.directions[this.currentDirection].y,
     }
 
-    // Move the head forward by one pixel based on velocity
-    const head = { x: this.snake[0].x + this.vx, y: this.snake[0].y + this.vy }
     this.snake.unshift(head)
 
     // If the snake lands on a dot, increase the score and generate a new dot
@@ -117,13 +107,6 @@ class Game {
     }
   }
 
-  drawSnake() {
-    // Render each snake segment as a pixel
-    this.snake.forEach(segment => {
-      this.ui.draw(segment, 'green')
-    })
-  }
-
   generateRandomPixelCoords(min, max) {
     // Get a random coordinate from 0 to max container height/width
     return Math.round(Math.random() * (max - min) + min)
@@ -132,7 +115,7 @@ class Game {
   generateDot() {
     // Generate a dot at a random x/y coordinate
     this.dot.x = this.generateRandomPixelCoords(0, this.ui.gameContainer.width - 1)
-    this.dot.y = this.generateRandomPixelCoords(0, this.ui.gameContainer.height - 1)
+    this.dot.y = this.generateRandomPixelCoords(1, this.ui.gameContainer.height - 1)
 
     // If the pixel is on a snake, regenerate the dot
     this.snake.forEach(segment => {
@@ -142,15 +125,16 @@ class Game {
     })
   }
 
+  drawSnake() {
+    // Render each snake segment as a pixel
+    this.snake.forEach(segment => {
+      this.ui.draw(segment, 'green')
+    })
+  }
+
   drawDot() {
     // Render the dot as a pixel
     this.ui.draw(this.dot, 'red')
-  }
-
-  // Set to initial direction and clear the screen
-  clear() {
-    this.changingDirection = false
-    this.ui.clearScreen()
   }
 
   gameOver() {
@@ -179,6 +163,12 @@ class Game {
     this.ui.render()
   }
 
+  // Set to initial direction and clear the screen
+  clear() {
+    this.changingDirection = false
+    this.ui.clearScreen()
+  }
+
   tick() {
     if (this.gameOver()) {
       this.showGameOverScreen()
@@ -192,7 +182,6 @@ class Game {
     this.drawDot()
     this.moveSnake()
     this.drawSnake()
-
     this.ui.render()
   }
 

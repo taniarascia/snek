@@ -42,9 +42,9 @@ node index.js
 
 ## Acknowledgements
 
-- Panayiotis Nicolaou's [JavaScript Snake for Web](https://medium.freecodecamp.org/think-like-a-programmer-how-to-build-snake-using-only-javascript-html-and-css-7b1479c3339e) for initial logic
 - [Vanya Sergeev](https://sergeev.io) for pointing out my snake collision bug, for advising me to make a single, reusable draw method, for showing me how to properly bind methods between classes, and for overall guidance and inspiration
 - [Devin McIntyre](https://www.dev-eloper.com/) for general advice
+- Panayiotis Nicolaou's [JavaScript Snake for Web](https://medium.freecodecamp.org/think-like-a-programmer-how-to-build-snake-using-only-javascript-html-and-css-7b1479c3339e) for initial logic
 
 ## Author
 
