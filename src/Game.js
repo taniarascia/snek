@@ -31,9 +31,18 @@ class Game {
   }
 
   changeDirection(_, key) {
-    const directions = ['up', 'down', 'left', 'right']
-
-    if (directions.includes(key.name)) this.currentDirection = key.name
+    if (key.name === 'up' || key.name === 'w') {
+      this.currentDirection = 'up'
+    }
+    if (key.name === 'down' || key.name === 's') {
+      this.currentDirection = 'down'
+    }
+    if (key.name === 'left' || key.name === 'a') {
+      this.currentDirection = 'left'
+    }
+    if (key.name === 'right' || key.name === 'd') {
+      this.currentDirection = 'right'
+    }
   }
 
   moveSnake() {
