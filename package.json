@@ -1,7 +1,7 @@
 {
   "name": "snekjs",
   "version": "0.1.2",
-  "description": "no step on snek",
+  "description": "A terminal-based Snake implementation written in JavaScript (Node.js) 🐍",
   "author": {
     "name": "Tania Rascia",
     "email": "me@taniarascia.com",
@@ -9,7 +9,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "play": "node src/play.js"
+    "play": "node play.js"
   },
   "dependencies": {
     "blessed": "^0.1.81"

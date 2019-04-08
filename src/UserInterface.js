@@ -6,7 +6,7 @@
  * abstract and extended for multiple interfaces - web, terminal, etc.
  */
 class UserInterface {
-  constructor(screen, blessed) {
+  constructor(blessed, screen) {
     // Blessed is the terminal library API that provides a screen, elements, and event handling
     this.blessed = blessed
     this.screen = screen

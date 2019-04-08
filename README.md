@@ -26,13 +26,12 @@ Create the game.
 // index.js
 
 const blessed = require('blessed')
-const screen = blessed.screen({ smartCSR: true })
 const { UserInterface, Game } = require('snekjs')
-const ui = new UserInterface(screen, blessed)
+const ui = new UserInterface(blessed, blessed.screen())
 const game = new Game(ui)
 
-game.generateDot() // Generate the coordinates of the first dot before the game begins
-game.start() // Begin game
+// Begin game
+game.start()
 ```
 
 Run the game.
@@ -44,8 +43,8 @@ node index.js
 ## Acknowledgements
 
 - Panayiotis Nicolaou's [JavaScript Snake for Web](https://medium.freecodecamp.org/think-like-a-programmer-how-to-build-snake-using-only-javascript-html-and-css-7b1479c3339e) for initial logic
-- [Vanya Sergeev](https://sergeev.io) for pointing out my snake collision bug, for advising me to make a single, reusable draw method, and for showing me how to properly bind methods between classes.
-- [Devin McIntyre](https://www.dev-eloper.com/) for giving advice.
+- [Vanya Sergeev](https://sergeev.io) for pointing out my snake collision bug, for advising me to make a single, reusable draw method, for showing me how to properly bind methods between classes, and for overall guidance and inspiration
+- [Devin McIntyre](https://www.dev-eloper.com/) for general advice
 
 ## Author
 

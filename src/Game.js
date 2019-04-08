@@ -1,7 +1,15 @@
 /**
  * @class Game
  *
- * Track the state of the snake, dot, and score
+ * The Game class tracks the state of three things:
+ *
+ * 1. The snake, including its direction, velocity, and location
+ * 2. The dot
+ * 3. The score
+ *
+ * The i/o of the game is handled by a separate UserInterface class, which is responsible for
+ * detecting all event handlers (key press), creating the screen, and drawing elements to the
+ * screen.
  */
 class Game {
   constructor(ui) {
@@ -160,23 +168,30 @@ class Game {
     this.ui.render()
   }
 
-  start() {
-    this.timer = setInterval(this.tick.bind(this), 55)
-  }
-
   tick() {
     if (this.gameOver()) {
+      clearInterval(this.timer)
+      this.timer = null
       this.showGameOverScreen()
 
-      this.timer = null
-      clearInterval(this.timer)
-    } else {
-      this.clear()
-      this.drawDot()
-      this.moveSnake()
-      this.drawSnake()
+      return
+    }
 
-      this.ui.render()
+    this.clear()
+    this.drawDot()
+    this.moveSnake()
+    this.drawSnake()
+
+    this.ui.render()
+  }
+
+  reset() {}
+
+  start() {
+    if (!this.timer) {
+      // Generate the first dot before the game begins
+      this.generateDot()
+      this.timer = setInterval(this.tick.bind(this), 50)
     }
   }
 
