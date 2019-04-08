@@ -16,9 +16,24 @@ class Game {
     ]
     this.score = 0
     this.ui = ui // i/o
+
+    this.dot = {} // the first random dot will be generated before the game begins
+
+    // Start the game in the top left, moving right
+    this.initialDirection = 'right'
+    this.currentDirection = this.initialDirection
+    this.changingDirection = false
     this.vx = 0 // horizontal velocity
     this.vy = 0 // vertical velocity
-    this.dot = {} // the first random dot will be generated before the game begins
+
+    // Bind handlers to UI
+    this.ui.bindHandlers(this.changeDirection.bind(this), this.quit.bind(this))
+  }
+
+  changeDirection(_, key) {
+    const directions = ['up', 'down', 'left', 'right']
+
+    if (directions.includes(key.name)) this.currentDirection = key.name
   }
 
   moveSnake() {
@@ -27,28 +42,28 @@ class Game {
     const goingLeft = this.vx === -1
     const goingRight = this.vx === 1
 
-    if (this.ui.changingDirection) {
+    if (this.changingDirection) {
       return
     }
 
-    this.ui.changingDirection = true
+    this.changingDirection = true
 
-    if (this.ui.currentDirection === 'up' && !goingDown) {
+    if (this.currentDirection === 'up' && !goingDown) {
       this.vy = -1
       this.vx = 0
     }
 
-    if (this.ui.currentDirection === 'down' && !goingUp) {
+    if (this.currentDirection === 'down' && !goingUp) {
       this.vy = 1
       this.vx = 0
     }
 
-    if (this.ui.currentDirection === 'right' && !goingLeft) {
+    if (this.currentDirection === 'right' && !goingLeft) {
       this.vx = 1
       this.vy = 0
     }
 
-    if (this.ui.currentDirection === 'left' && !goingRight) {
+    if (this.currentDirection === 'left' && !goingRight) {
       this.vx = -1
       this.vy = 0
     }
@@ -60,7 +75,7 @@ class Game {
     // If the snake lands on a dot, increase the score and generate a new dot
     if (this.snake[0].x === this.dot.x && this.snake[0].y === this.dot.y) {
       this.score++
-      this.ui.setScore(this.score)
+      this.ui.drawScore(this.score)
       this.generateDot()
     } else {
       // Otherwise, slither
@@ -71,7 +86,7 @@ class Game {
   renderSnake() {
     // Render each snake segment as a pixel
     this.snake.forEach((segment, i) => {
-      this.ui.drawSnake(segment, i)
+      this.ui.drawSnakeSegment(segment, i)
     })
   }
 
@@ -98,13 +113,18 @@ class Game {
     this.ui.drawDot(this.dot)
   }
 
-  gameOver() {
-    let collide = false
+  // Set to initial direction
+  clearDirection() {
+    this.changingDirection = false
+  }
 
+  gameOver() {
     // If the snake collides with itself, end the game
-    this.snake.forEach((segment, i) => {
-      collide = segment.x === this.snake[0].x && segment.y === this.snake[0].y
-    })
+    const collide = this.snake
+      .filter((segment, i) => i > 0)
+      .some((segment, i) => {
+        segment.x === this.snake[0].x && segment.y === this.snake[0].y
+      })
 
     return (
       collide ||
@@ -117,6 +137,10 @@ class Game {
       // bottom wall
       this.snake[0].y === -1
     )
+  }
+
+  quit() {
+    process.exit(0)
   }
 }
 

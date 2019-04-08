@@ -1,38 +1,28 @@
+const { gameOverText } = require('./GameOverText')
+
 /**
- * @class Interface
+ * @class UserInterface
  *
  * Interact with the input (keyboard directions) and output (creating screen and drawing pixels
  * to the screen). Currently this class is one hard-coded interface, but could be made into an
  * abstract and extended for multiple interfaces - web, terminal, etc.
  */
-class Interface {
+class UserInterface {
   constructor(screen, blessed) {
     // Blessed is the terminal library API that provides a screen, elements, and event handling
     this.blessed = blessed
     this.screen = screen
 
     // Game title
-    this.screen.title = 'no step on snek'
-
-    // Event to handle keypress i/o
-    this.screen.on('keypress', (_, key) => {
-      if (key.name === 'up' || key.name === 'down' || key.name === 'left' || key.name === 'right') {
-        this.currentDirection = key.name
-      }
-    })
-
-    // Exit the game
-    this.screen.key(['escape', 'q', 'C-c'], () => {
-      process.exit(0)
-    })
+    this.screen.title = 'Snake.js'
 
     // Create the game container
     this.initialGameBox = {
       parent: this.screen,
-      top: 0,
+      top: 1,
       left: 0,
-      width: 50,
-      height: 20,
+      width: '100%',
+      height: '100%-1',
       style: {
         fg: 'black',
         bg: 'black',
@@ -42,22 +32,16 @@ class Interface {
     // Create the score container
     this.scoreBox = {
       parent: this.screen,
-      top: 1,
-      left: 52,
-      width: 20,
-      height: 5,
+      top: 0,
+      left: 'left',
+      width: '100%',
+      height: 1,
       tags: true,
       style: {
-        fg: 'white',
-        bg: 'magenta',
-        border: {
-          fg: 'white',
-        },
+        fg: 'black',
+        bg: 'blue',
       },
-      border: {
-        type: 'line',
-      },
-      content: '{center}{bold}Score{/bold}:{/center}',
+      content: '{bold}Score{/bold}: 0',
     }
     this.gameContainer = this.blessed.box(this.initialGameBox)
     this.scoreContainer = this.blessed.box(this.scoreBox)
@@ -65,15 +49,16 @@ class Interface {
     // Snake and dot are represented by pixels
     this.snakePixels = []
     this.dotPixel = {}
+  }
 
-    // Start the game in the top left, moving right
-    this.initialDirection = 'right'
-    this.currentDirection = this.initialDirection
-    this.changingDirection = false
+  bindHandlers(keyPressHandler, quitHandler) {
+    // Event to handle keypress i/o
+    this.screen.on('keypress', keyPressHandler)
+    this.screen.key(['escape', 'q', 'C-c'], quitHandler)
   }
 
   // Draw each snake segment as a pixel
-  drawSnake(segment, i) {
+  drawSnakeSegment(segment, i) {
     this.snakePixels[i] = this.blessed.box({
       parent: this.gameContainer,
       top: segment.y,
@@ -81,8 +66,8 @@ class Interface {
       width: 1,
       height: 1,
       style: {
-        fg: 'blue',
-        bg: 'blue',
+        fg: 'green',
+        bg: 'green',
       },
     })
   }
@@ -96,24 +81,29 @@ class Interface {
       width: 1,
       height: 1,
       style: {
-        fg: 'green',
-        bg: 'green',
+        fg: 'red',
+        bg: 'red',
       },
     })
   }
 
   // Keep track of how many dots have been consumed and write to the score box
-  setScore(score) {
-    this.scoreContainer.setLine(1, `{center}${score}{/center}`)
+  drawScore(score) {
+    this.scoreContainer.setLine(0, `{bold}Score:{/bold} ${score}`)
   }
 
   // BSOD on game over
   gameOverScreen() {
     this.gameContainer = this.blessed.box({
-      ...this.initialGameBox,
+      parent: this.screen,
+      top: 'center',
+      left: 'center',
+      width: '50%',
+      height: '50%',
       tags: true,
-      content: '\n\n\n\n\n\n\n\n\n{center}Game Over!{/}',
-      style: { bg: 'blue' },
+      valign: 'middle',
+      content: `{center}${gameOverText}{/center}`,
+      style: { bg: 'black', fg: 'red' },
     })
   }
 
@@ -122,14 +112,9 @@ class Interface {
     this.gameContainer = this.blessed.box(this.initialGameBox)
   }
 
-  // Set to initial direction
-  clearDirection() {
-    this.changingDirection = false
-  }
-
   render() {
     this.screen.render()
   }
 }
 
-module.exports = { Interface }
+module.exports = { UserInterface }

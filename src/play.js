@@ -1,13 +1,14 @@
 const blessed = require('blessed')
 const screen = blessed.screen({ smartCSR: true })
-const { Interface } = require('./Interface')
+const { UserInterface } = require('./UserInterface')
 const { Game } = require('./Game')
-const ui = new Interface(screen, blessed)
+const ui = new UserInterface(screen, blessed)
 const game = new Game(ui)
 
 function tick() {
   if (game.gameOver()) {
     // Show game over screen on collision and end game
+    game.currentDirection = null
     ui.gameOverScreen()
     ui.render()
 
@@ -15,8 +16,7 @@ function tick() {
   }
 
   ui.clearScreen()
-  ui.clearDirection()
-
+  game.clearDirection()
   game.renderDot()
   game.moveSnake()
   game.renderSnake()
