@@ -7,9 +7,9 @@
  * 2. The dot
  * 3. The score
  *
- * The i/o of the game is handled by a separate UserInterface class, which is responsible for
- * detecting all event handlers (key press), creating the screen, and drawing elements to the
- * screen.
+ * The i/o of the game is handled by a separate UserInterface class, which is
+ * responsible for  * detecting all event handlers (key press), creating the
+ * screen, and drawing elements to the screen.
  */
 class Game {
   constructor(ui) {
@@ -25,16 +25,19 @@ class Game {
       { x: 1, y: 0 },
       { x: 0, y: 0 },
     ]
-    this.dot = {} // the first random dot will be generated before the game begins
+
+    // The first random dot will be generated before the game begins
+    this.dot = {}
     this.score = 0
 
     // Start the game in the top left, moving right
     this.currentDirection = 'right'
+    this.changingDirection = false
     this.vx = 0 // horizontal velocity
     this.vy = 0 // vertical velocity
     this.timer = null
 
-    // Bind handlers to UI
+    // Bind handlers to UI so we can detect input change from the Game class
     this.ui.bindHandlers(
       this.changeDirection.bind(this),
       this.quit.bind(this),
@@ -42,6 +45,9 @@ class Game {
     )
   }
 
+  /**
+   * Support WASD and arrow key controls. Update the direction of the snake.
+   */
   changeDirection(_, key) {
     if (key.name === 'up' || key.name === 'w') {
       this.currentDirection = 'up'
@@ -54,28 +60,36 @@ class Game {
     }
   }
 
+  /**
+   * Set the velocity of the snake based on the current direction. Create a new
+   * head by adding a new segment to the beginning of the snake array,
+   * increasing by one velocity. Remove one item from the end of the array to
+   * make the snake move, unless the snake collides with a dot - then increase
+   * the score and increase the length of the snake by one.
+   *
+   */
   moveSnake() {
     const goingUp = this.vy === -1
     const goingDown = this.vy === 1
     const goingLeft = this.vx === -1
     const goingRight = this.vx === 1
 
+    if (this.changingDirection) {
+      return
+    }
+
+    this.changingDirection = true
+
     if (this.currentDirection === 'up' && !goingDown) {
       this.vy = -1
       this.vx = 0
-    }
-
-    if (this.currentDirection === 'down' && !goingUp) {
+    } else if (this.currentDirection === 'down' && !goingUp) {
       this.vy = 1
       this.vx = 0
-    }
-
-    if (this.currentDirection === 'right' && !goingLeft) {
+    } else if (this.currentDirection === 'right' && !goingLeft) {
       this.vx = 1
       this.vy = 0
-    }
-
-    if (this.currentDirection === 'left' && !goingRight) {
+    } else if (this.currentDirection === 'left' && !goingRight) {
       this.vx = -1
       this.vy = 0
     }
@@ -127,6 +141,7 @@ class Game {
 
   // Set to initial direction and clear the screen
   clear() {
+    this.changingDirection = false
     this.ui.clearScreen()
   }
 

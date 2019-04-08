@@ -1,13 +1,15 @@
 /**
  * @class UserInterface
  *
- * Interact with the input (keyboard directions) and output (creating screen and drawing pixels
- * to the screen). Currently this class is one hard-coded interface, but could be made into an
- * abstract and extended for multiple interfaces - web, terminal, etc.
+ * Interact with the input (keyboard directions) and output (creating screen and
+ * drawing pixels to the screen). Currently this class is one hard-coded
+ * interface, but could be made into an abstract and extended for multiple
+ * interfaces - web, terminal, etc.
  */
 class UserInterface {
   constructor(blessed, screen) {
-    // Blessed is the terminal library API that provides a screen, elements, and event handling
+    // Blessed is the terminal library API that provides a screen, elements, and
+    // event handling
     this.blessed = blessed
     this.screen = screen
 
