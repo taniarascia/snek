@@ -22,11 +22,12 @@ function tick() {
   game.renderSnake()
 
   ui.render()
+  setTimeout(tick, 50)
 }
 
 // Iterate every 50ms
 function main() {
-  setInterval(tick, 50)
+  setTimeout(tick, 50)
 }
 
 // Generate the coordinates of the first dot before the game begins
