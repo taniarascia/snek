@@ -42,7 +42,7 @@ node index.js
 
 ## Preview
 
-[!snek.gif](snek.gif)
+![snek.gif](snek.gif)
 
 ## Acknowledgements
 
