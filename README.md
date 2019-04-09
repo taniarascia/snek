@@ -2,6 +2,8 @@
 
 A terminal-based Snake implementation written in JavaScript (Node.js).
 
+![snek.gif](snek.gif)
+
 ## Instructions
 
 ### Clone from repository
@@ -39,10 +41,6 @@ Run the game.
 ```bash
 node index.js
 ```
-
-## Preview
-
-![snek.gif](snek.gif)
 
 ## Acknowledgements
 
