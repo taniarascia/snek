@@ -156,11 +156,6 @@ class Game {
     this.ui.render()
   }
 
-  // Set to initial direction and clear the screen
-  clear() {
-    this.ui.clearScreen()
-  }
-
   tick() {
     if (this.isGameOver()) {
       this.showGameOverScreen()
@@ -170,7 +165,7 @@ class Game {
       return
     }
 
-    this.clear()
+    this.ui.clearScreen()
     this.drawDot()
     this.moveSnake()
     this.drawSnake()
