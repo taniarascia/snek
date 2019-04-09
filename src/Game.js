@@ -112,7 +112,7 @@ class Game {
 
     // If the pixel is on a snake, regenerate the dot
     this.snake.forEach(segment => {
-      if (segment.x === this.x && segment.y === this.y) {
+      if (segment.x === this.dot.x && segment.y === this.dot.y) {
         this.generateDot()
       }
     })
