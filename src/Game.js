@@ -100,15 +100,15 @@ class Game {
     }
   }
 
-  generateRandomPixelCoords(min, max) {
+  generateRandomPixelCoord(min, max) {
     // Get a random coordinate from 0 to max container height/width
     return Math.round(Math.random() * (max - min) + min)
   }
 
   generateDot() {
     // Generate a dot at a random x/y coordinate
-    this.dot.x = this.generateRandomPixelCoords(0, this.ui.gameContainer.width - 1)
-    this.dot.y = this.generateRandomPixelCoords(1, this.ui.gameContainer.height - 1)
+    this.dot.x = this.generateRandomPixelCoord(0, this.ui.gameContainer.width - 1)
+    this.dot.y = this.generateRandomPixelCoord(1, this.ui.gameContainer.height - 1)
 
     // If the pixel is on a snake, regenerate the dot
     this.snake.forEach(segment => {

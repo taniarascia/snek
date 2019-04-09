@@ -76,11 +76,11 @@ class UserInterface {
   }
 
   // Draw a pixel
-  draw(coords, color) {
+  draw(coord, color) {
     this.blessed.box({
       parent: this.gameContainer,
-      top: coords.y,
-      left: coords.x,
+      top: coord.y,
+      left: coord.x,
       width: 1,
       height: 1,
       style: {
