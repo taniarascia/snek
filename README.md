@@ -2,7 +2,7 @@
 
 A terminal-based Snake implementation written in JavaScript (Node.js).
 
-![snek.gif](snek.gif)
+![snek.gif](https://raw.githubusercontent.com/taniarascia/snek/master/snek.gif)
 
 ## Instructions
 
