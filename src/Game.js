@@ -1,3 +1,11 @@
+const {
+  GAME_SPEED,
+  DIRECTIONS,
+  INITIAL_SNAKE_SIZE,
+  SNAKE_COLOR,
+  DOT_COLOR,
+} = require('./constants')
+
 /**
  * @class Game
  *
@@ -8,7 +16,7 @@
  * 3. The score
  *
  * The i/o of the game is handled by a separate UserInterface class, which is
- * responsible for  * detecting all event handlers (key press), creating the
+ * responsible for detecting all event handlers (key press), creating the
  * screen, and drawing elements to the screen.
  */
 class Game {
@@ -28,23 +36,15 @@ class Game {
 
   reset() {
     // Set up initial state
-    this.snake = [
-      { x: 5, y: 0 },
-      { x: 4, y: 0 },
-      { x: 3, y: 0 },
-      { x: 2, y: 0 },
-      { x: 1, y: 0 },
-      { x: 0, y: 0 },
-    ]
+    this.snake = []
+
+    for (let i = INITIAL_SNAKE_SIZE; i >= 0; i--) {
+      this.snake[INITIAL_SNAKE_SIZE - i] = { x: i, y: 0 }
+    }
+
     this.dot = {}
     this.score = 0
     this.currentDirection = 'right'
-    this.directions = {
-      up: { x: 0, y: -1 },
-      down: { x: 0, y: 1 },
-      right: { x: 1, y: 0 },
-      left: { x: -1, y: 0 },
-    }
     this.timer = null
 
     // Generate the first dot before the game begins
@@ -83,8 +83,8 @@ class Game {
   moveSnake() {
     // Move the head forward by one pixel based on velocity
     const head = {
-      x: this.snake[0].x + this.directions[this.currentDirection].x,
-      y: this.snake[0].y + this.directions[this.currentDirection].y,
+      x: this.snake[0].x + DIRECTIONS[this.currentDirection].x,
+      y: this.snake[0].y + DIRECTIONS[this.currentDirection].y,
     }
 
     this.snake.unshift(head)
@@ -121,16 +121,16 @@ class Game {
   drawSnake() {
     // Render each snake segment as a pixel
     this.snake.forEach(segment => {
-      this.ui.draw(segment, 'green')
+      this.ui.draw(segment, SNAKE_COLOR)
     })
   }
 
   drawDot() {
     // Render the dot as a pixel
-    this.ui.draw(this.dot, 'red')
+    this.ui.draw(this.dot, DOT_COLOR)
   }
 
-  gameOver() {
+  isGameOver() {
     // If the snake collides with itself, end the game
     const collide = this.snake
       // Filter out the head
@@ -162,7 +162,7 @@ class Game {
   }
 
   tick() {
-    if (this.gameOver()) {
+    if (this.isGameOver()) {
       this.showGameOverScreen()
       clearInterval(this.timer)
       this.timer = null
@@ -181,7 +181,7 @@ class Game {
     if (!this.timer) {
       this.reset()
 
-      this.timer = setInterval(this.tick.bind(this), 50)
+      this.timer = setInterval(this.tick.bind(this), GAME_SPEED)
     }
   }
 
