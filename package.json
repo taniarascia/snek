@@ -1,6 +1,6 @@
 {
   "name": "snekjs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A terminal-based Snake implementation written in JavaScript (Node.js) 🐍",
   "author": {
     "name": "Tania Rascia",
