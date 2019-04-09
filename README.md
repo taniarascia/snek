@@ -42,7 +42,7 @@ node index.js
 
 ## Preview
 
-[![asciicast](https://asciinema.org/a/239667.svg)](https://asciinema.org/a/239667)
+[!snek.gif](snek.gif)
 
 ## Acknowledgements
 
