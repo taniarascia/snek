@@ -1,3 +1,5 @@
+const blessed = require('blessed')
+
 /**
  * @class UserInterface
  *
@@ -7,17 +9,26 @@
  * interfaces - web, terminal, etc.
  */
 class UserInterface {
-  constructor(blessed, screen) {
+  constructor() {
     // Blessed is the terminal library API that provides a screen, elements, and
     // event handling
     this.blessed = blessed
-    this.screen = screen
+    this.screen = blessed.screen()
 
     // Game title
     this.screen.title = 'Snek.js'
 
-    // Create the game container
-    this.gameBox = {
+    // Create the boxes
+    this.gameBox = this.createGameBox()
+    this.scoreBox = this.createScoreBox()
+    this.gameOverBox = this.createGameOverBox()
+
+    this.gameContainer = this.blessed.box(this.gameBox)
+    this.scoreContainer = this.blessed.box(this.scoreBox)
+  }
+
+  createGameBox() {
+    return {
       parent: this.screen,
       top: 1,
       left: 0,
@@ -28,9 +39,10 @@ class UserInterface {
         bg: 'black',
       },
     }
+  }
 
-    // Create the score container
-    this.scoreBox = {
+  createScoreBox() {
+    return {
       parent: this.screen,
       top: 0,
       left: 'left',
@@ -42,8 +54,10 @@ class UserInterface {
         bg: 'blue',
       },
     }
+  }
 
-    this.gameOverBox = {
+  createGameOverBox() {
+    return {
       parent: this.screen,
       top: 'center',
       left: 'center',
@@ -63,9 +77,6 @@ class UserInterface {
         },
       },
     }
-
-    this.gameContainer = this.blessed.box(this.gameBox)
-    this.scoreContainer = this.blessed.box(this.scoreBox)
   }
 
   bindHandlers(keyPressHandler, quitHandler, enterHandler) {

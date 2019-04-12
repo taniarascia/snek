@@ -1,8 +1,6 @@
-const blessed = require('blessed')
-const { UserInterface } = require('./src/UserInterface')
 const { Game } = require('./src/Game')
-const ui = new UserInterface(blessed, blessed.screen())
-const game = new Game(ui)
+const { UserInterface } = require('./src/UserInterface')
+const game = new Game(new UserInterface())
 
 // Begin game
 game.start()

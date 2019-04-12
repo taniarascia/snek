@@ -15,6 +15,9 @@ Use the arrow keys (`↑`, `↓`, `←`, `→`) or `W` `A` `S` `D` to navigate t
 ```bash
 git clone https://github.com/taniarascia/snek
 cd snek
+
+# install and run via npm or yarn
+npm install && npm run play
 yarn && yarn play
 ```
 
@@ -30,11 +33,8 @@ Create the game.
 
 ```js
 // index.js
-
-const blessed = require('blessed')
 const { UserInterface, Game } = require('snekjs')
-const ui = new UserInterface(blessed, blessed.screen())
-const game = new Game(ui)
+const game = new Game(new UserInterface())
 
 // Begin game
 game.start()
