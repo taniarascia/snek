@@ -50,7 +50,7 @@ class UserInterface {
       height: 1,
       tags: true,
       style: {
-        fg: 'black',
+        fg: 'white',
         bg: 'blue',
       },
     }
