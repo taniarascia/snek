@@ -25,8 +25,7 @@ git clone https://github.com/taniarascia/snek
 cd snek
 
 # install and run via npm or yarn
-npm install && npm run play
-yarn && yarn play
+npm i && npm run play
 ```
 
 ### npm module
@@ -34,7 +33,7 @@ yarn && yarn play
 Add the `snekjs` module.
 
 ```bash
-yarn add snekjs
+npm i snekjs
 ```
 
 Create the game.
