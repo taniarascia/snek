@@ -5,6 +5,8 @@ A terminal-based Snake implementation written in JavaScript (Node.js).
 
 ![snek.gif](https://raw.githubusercontent.com/taniarascia/snek/master/snek.gif)
 
+### [Read the Tutorial](https://www.taniarascia.com/snake-game-in-javascript/)
+
 ## Instructions
 
 Use the arrow keys (`↑`, `↓`, `←`, `→`) or `W` `A` `S` `D` to navigate the snake up, down, left, or right. Eat the red dot to gain points. If the snake collides with the wall or its own tail, it's game over. Press `ENTER` to restart, and `Q`, `ESCAPE` or `CTRL` + `C` to quit the game.
