@@ -3,9 +3,9 @@
 
 A terminal-based Snake implementation written in JavaScript (Node.js).
 
-![snek.gif](https://raw.githubusercontent.com/taniarascia/snek/master/snek.gif)
+### [Read the tutorial](https://www.taniarascia.com/snake-game-in-javascript/)
 
-### [Read the Tutorial](https://www.taniarascia.com/snake-game-in-javascript/)
+![snek.gif](https://raw.githubusercontent.com/taniarascia/snek/master/snek.gif)
 
 ## Instructions
 
