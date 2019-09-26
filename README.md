@@ -67,8 +67,6 @@ node index.js
 
 - [Tania Rascia](https://www.taniarascia.com)
 
-<a href="https://patreon.com/taniarascia"><img src="https://img.shields.io/endpoint.svg?url=https://shieldsio-patreon.herokuapp.com/taniarascia&style=for-the-badge" alt="Patreon donate button" /> </a>
-
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
