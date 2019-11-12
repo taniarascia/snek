@@ -4,6 +4,10 @@ const {
   INITIAL_SNAKE_SIZE,
   SNAKE_COLOR,
   DOT_COLOR,
+  DIRECTION_UP,
+  DIRECTION_RIGHT,
+  DIRECTION_DOWN,
+  DIRECTION_LEFT,
 } = require('./constants')
 
 /**
@@ -44,7 +48,7 @@ class Game {
 
     this.dot = {}
     this.score = 0
-    this.currentDirection = 'right'
+    this.currentDirection = DIRECTION_RIGHT
     this.changingDirection = false
     this.timer = null
 
@@ -59,17 +63,17 @@ class Game {
    * do not allow reversal.
    */
   changeDirection(_, key) {
-    if ((key.name === 'up' || key.name === 'w') && this.currentDirection !== 'down') {
-      this.currentDirection = 'up'
+    if ((key.name === DIRECTION_UP || key.name === 'w') && this.currentDirection !== DIRECTION_DOWN) {
+      this.currentDirection = DIRECTION_UP
     }
-    if ((key.name === 'down' || key.name === 's') && this.currentDirection !== 'up') {
-      this.currentDirection = 'down'
+    if ((key.name === DIRECTION_DOWN || key.name === 's') && this.currentDirection !== DIRECTION_UP) {
+      this.currentDirection = DIRECTION_DOWN
     }
-    if ((key.name === 'left' || key.name === 'a') && this.currentDirection !== 'right') {
-      this.currentDirection = 'left'
+    if ((key.name === DIRECTION_LEFT || key.name === 'a') && this.currentDirection !== DIRECTION_RIGHT) {
+      this.currentDirection = DIRECTION_LEFT
     }
-    if ((key.name === 'right' || key.name === 'd') && this.currentDirection !== 'left') {
-      this.currentDirection = 'right'
+    if ((key.name === DIRECTION_RIGHT || key.name === 'd') && this.currentDirection !== DIRECTION_LEFT) {
+      this.currentDirection = DIRECTION_RIGHT
     }
   }
 
