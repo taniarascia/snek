@@ -2,6 +2,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![snekjs on NPM](https://img.shields.io/npm/v/snekjs.svg?color=green&label=snekjs)](https://www.npmjs.com/package/snekjs)
 
+[![Run on Repl.it](https://repl.it/badge/github/taniarascia/snek)](https://repl.it/github/taniarascia/snek)
+
 A terminal-based Snake implementation written in JavaScript (Node.js).
 
 ### [Read the tutorial](https://www.taniarascia.com/snake-game-in-javascript/)
