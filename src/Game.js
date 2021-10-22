@@ -49,7 +49,6 @@ class Game {
     this.dot = {}
     this.score = 0
     this.currentDirection = DIRECTION_RIGHT
-    this.changingDirection = false
     this.timer = null
 
     // Generate the first dot before the game begins
@@ -86,10 +85,6 @@ class Game {
    *
    */
   moveSnake() {
-    if (this.changingDirection) {
-      return
-    }
-    this.changingDirection = true
 
     // Move the head forward by one pixel based on velocity
     const head = {
@@ -175,7 +170,6 @@ class Game {
       return
     }
 
-    this.changingDirection = false
     this.ui.clearScreen()
     this.drawDot()
     this.moveSnake()
